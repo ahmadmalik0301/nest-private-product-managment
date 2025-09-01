@@ -1,6 +1,6 @@
 # Private Product Management API
 
-A **RESTful API** built with **NestJS** for managing private products and users.
+A **RESTful API** built with **NestJS** for managing private products.
 
 ## Features
 
@@ -27,5 +27,6 @@ A **RESTful API** built with **NestJS** for managing private products and users.
   - JWT_SECRET=...
   - SENDER_EMAIL=...
   - SGMAIL_AUTH=...
+- docker compose up -d
 - npx prisma migrate dev
 - npm run start:dev or npm run start:prod
