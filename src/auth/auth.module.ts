@@ -6,7 +6,6 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
-import { EmailWorker } from './auth.worker';
 
 @Module({
   imports: [
@@ -16,6 +15,6 @@ import { EmailWorker } from './auth.worker';
     BullModule.registerQueue({ name: 'email' }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, EmailWorker],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}

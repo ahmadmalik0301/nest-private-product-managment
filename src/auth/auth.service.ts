@@ -7,20 +7,15 @@ import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
-import { MailService } from '@sendgrid/mail';
 
 @Injectable()
 export class AuthService {
-  private sgMail: MailService;
   constructor(
     private prisma: PrismaService,
     private jwt: JwtService,
     private config: ConfigService,
     @InjectQueue('email') private readonly emailQueue: Queue,
-  ) {
-    this.sgMail = new MailService();
-    this.sgMail.setApiKey(config.get<string>('SGMAIL_AUTH')!);
-  }
+  ) {}
 
   async login(createAuthDto: CreateAuthDto) {
     const user: User | null = await this.prisma.user.findUnique({
@@ -69,23 +64,5 @@ export class AuthService {
       secret,
     });
     return { token };
-  }
-  async sendEmail(to: string, subject: string, text: string) {
-    const msg = {
-      to,
-      from: this.config.get('SENDER_EMAIL'),
-      subject,
-      text,
-      html: `<p>${text}</p>`,
-    };
-
-    try {
-      await this.sgMail.send(msg);
-      console.log(`Email sent to: ${to}`);
-      return { success: true, message: `Email sent to ${to}` };
-    } catch (error) {
-      console.error('Error sending email:', error.message);
-      throw error;
-    }
   }
 }

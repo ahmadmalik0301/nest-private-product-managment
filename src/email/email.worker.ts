@@ -1,10 +1,10 @@
 import { Processor, WorkerHost, OnWorkerEvent } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
-import { AuthService } from './auth.service';
+import { EmailService } from './email.service';
 
 @Processor('email')
 export class EmailWorker extends WorkerHost {
-  constructor(private readonly emailService: AuthService) {
+  constructor(private readonly emailService: EmailService) {
     super();
   }
 

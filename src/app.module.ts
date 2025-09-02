@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -23,6 +24,8 @@ import { BullModule } from '@nestjs/bullmq';
     AuthModule,
 
     ConfigModule.forRoot({ isGlobal: true }),
+
+    EmailModule,
   ],
 })
 export class AppModule {}
