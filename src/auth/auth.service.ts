@@ -48,7 +48,7 @@ export class AuthService {
     await this.emailQueue.add('sendEmail', {
       to: user.email,
       subject: 'Welcome to Our App!',
-      html: `<p>Thank you for signing up, ${user.name}!</p>`,
+      text: `Thank you for signing up, ${user.name}!`,
     });
     console.log('Signup email job added to the queue');
     return {
