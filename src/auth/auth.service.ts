@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
+import { LoginAuthDto } from './dto/login-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,16 +18,16 @@ export class AuthService {
     @InjectQueue('email') private readonly emailQueue: Queue,
   ) {}
 
-  async login(createAuthDto: CreateAuthDto) {
+  async login(loginAuthDto: LoginAuthDto) {
     const user: User | null = await this.prisma.user.findUnique({
-      where: { email: createAuthDto.email },
+      where: { email: loginAuthDto.email },
     });
 
     if (!user) {
       throw new UnauthorizedException('Invalid Credentials');
     }
 
-    const isMatch = await argon.verify(user.password, createAuthDto.password);
+    const isMatch = await argon.verify(user.password, loginAuthDto.password);
     if (!isMatch) {
       throw new UnauthorizedException('Invalid Credentials');
     }
