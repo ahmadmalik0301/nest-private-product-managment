@@ -8,10 +8,21 @@ export class EmailWorker extends WorkerHost {
     super();
   }
 
+<<<<<<< HEAD
   async process(job: Job<{ to: string; subject: string; html: string }>) {
     console.log('Processing email job:', job.data);
     try {
       await this.emailService.sendEmail(job.data.to, job.data.subject, job.data.html);
+=======
+  async process(job: Job<{ to: string; subject: string; text: string }>) {
+    console.log('Processing email job:', job.data);
+    try {
+      await this.emailService.sendEmail(
+        job.data.to,
+        job.data.subject,
+        job.data.text,
+      );
+>>>>>>> feature/bullmq-worker
       console.log('Email sent to:', job.data.to);
     } catch (err) {
       console.error('Failed to send email:', err.message);
